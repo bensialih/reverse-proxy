@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  pitcher:
+    image: nginx:latest
+
+    ports:
+    - 8000:80
+
+    volumes:
+    - ./nginx/pitcher.conf:/etc/nginx/conf.d/default.conf
+
+  receiver:
+    image: nginx:latest
+    ports:
+    - 8080:80
+
+    volumes:
+    - ./nginx/receiver.conf:/etc/nginx/conf.d/default.conf
+    
+    depends_on:
+    - pitcher
+
+    links:
+    - pitcher
